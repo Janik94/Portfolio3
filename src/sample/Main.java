@@ -19,7 +19,7 @@ public class Main extends Application {
         StudentView view = new StudentView(SDB, control);
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Student Database");
-        primaryStage.setScene(new Scene(view.asParent(), 300, 275));
+        primaryStage.setScene(new Scene(view.asParent(), 600, 475));
         primaryStage.show();
     }
 
