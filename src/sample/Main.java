@@ -14,7 +14,7 @@ public class Main extends Application {
         Controller control = new Controller(SDB);
         StudentView view = new StudentView(SDB, control);
         primaryStage.setTitle("Student Database");
-        primaryStage.setScene(new Scene(view.asParent(), 600, 475));
+        primaryStage.setScene(new Scene(view.asParent(), 500, 400));
         primaryStage.show();
     }
 

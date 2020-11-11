@@ -34,4 +34,9 @@ public class Courses {
     public String getSemester() {
         return semester;
     }
+
+    @Override
+    public String toString() {
+        return courseID+": "+name;
+    }
 }
