@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.collections.FXCollections;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -10,10 +9,17 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 import javafx.scene.shape.Line;
 
+
 public class StudentView {
     StudentModel model;
     Controller control;
     private TabPane startView;
+    Button studentButton;
+    Button courseButton;
+    TextArea studentText;
+    TextArea courseText;
+    ComboBox<Student> studentBox;
+    ComboBox<Courses> courseBox;
 
     Button exitButton = new Button("Exit");
 
@@ -38,19 +44,19 @@ public class StudentView {
     public Tab findInfoTab() {
         Label studentLabel = new Label("Choose Student: ");
         Label courseLabel = new Label("Choose Course:");
-        Button studentButton = new Button("Find Student Information");
-        Button courseButton = new Button("Find Course Information");
-        TextArea studentText = new TextArea();
-        studentText.setText("What's up");
-        TextArea courseText = new TextArea();
-        courseText.setText("not much");
+        studentButton = new Button("Find Student Information");
+        courseButton = new Button("Find Course Information");
+        studentText = new TextArea();
+        studentText.setText("Student information will be printed here.");
+        courseText = new TextArea();
+        courseText.setText("Course information will be printed here.");
 
 
-        ComboBox<Student> studentBox = new ComboBox<>();
+        studentBox = new ComboBox<>();
         studentBox.setItems(FXCollections.observableArrayList(model.studentQuery()));
         studentBox.getSelectionModel().selectFirst();
 
-        ComboBox<Courses> courseBox = new ComboBox<>();
+        courseBox = new ComboBox<>();
         courseBox.setItems(FXCollections.observableArrayList(model.courseQuery()));
         courseBox.getSelectionModel().selectFirst();
 
@@ -62,7 +68,8 @@ public class StudentView {
         gridOne.setHgap(1);
         gridOne.setVgap(5);
 
-
+        /*Line line = new Line(0,20,420,20);
+        gridOne.add(line,0,20);*/
 
 
         //add label and combobox for students
@@ -78,6 +85,7 @@ public class StudentView {
         gridOne.add(courseBox, 0, 31);
         gridOne.add(courseButton,0,32);
         gridOne.add(courseText,30,29,15,10);
+
 
         Tab infoTab = new Tab();
 

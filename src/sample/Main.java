@@ -13,6 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         Controller control = new Controller(SDB);
         StudentView view = new StudentView(SDB, control);
+        control.setView(view);
         primaryStage.setTitle("Student Database");
         primaryStage.setScene(new Scene(view.asParent(), 500, 400));
         primaryStage.show();

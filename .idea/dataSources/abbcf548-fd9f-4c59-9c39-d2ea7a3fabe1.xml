@@ -82,9 +82,11 @@ StudentID</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_Grades_1</UnderlyingIndexName>
     </key>
     <foreign-key id="24" parent="7">
-      <ColNames>CourseID</ColNames>
+      <ColNames>CourseID
+CourseName</ColNames>
       <RefTableName>Courses</RefTableName>
-      <RefColNames>CID</RefColNames>
+      <RefColNames>CID
+Name</RefColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
@@ -94,9 +96,11 @@ StudentID</ColNames>
       <RefColNames>Name</RefColNames>
     </foreign-key>
     <foreign-key id="26" parent="7">
-      <ColNames>StudentID</ColNames>
+      <ColNames>StudentID
+StudentName</ColNames>
       <RefTableName>Students</RefTableName>
-      <RefColNames>SID</RefColNames>
+      <RefColNames>SID
+Name</RefColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
