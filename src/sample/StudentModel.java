@@ -2,9 +2,7 @@ package sample;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+
 
 import static java.sql.DriverManager.getConnection;
 
@@ -98,9 +96,7 @@ public class StudentModel {
     }
 
     public void preparedCourseStmtToQuery(){
-        String sql = "SELECT G.CourseID, G.StudentID,S.Name, G.Grade FROM Grades as G "+
-        "JOIN Students S on G.StudentID = S.SID "+
-        "WHERE G.CourseID = ?;";
+        String sql = "SELECT AVG(Grade) FROM Grades WHERE CourseID = ?";
         try
         {
             pStmt = conn.prepareStatement(sql);
@@ -117,12 +113,8 @@ public class StudentModel {
             pStmt.setString(1, cId);
             ResultSet rs = pStmt.executeQuery();
             while(rs!= null && rs.next()) {
-                String Id = rs.getString(1);
-                String sName = rs.getString(3); //only one stud right now
-                Integer sGrade = rs.getInt(4); //only one grade for now
-                cInfo.add(Id);
-                cInfo.add(sName);
-                cInfo.add(sGrade);
+                double average = rs.getDouble(1);
+                cInfo.add(average);
             }
         }catch(SQLException e){
             e.printStackTrace();

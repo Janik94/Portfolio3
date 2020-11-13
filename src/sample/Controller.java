@@ -44,11 +44,10 @@ public class Controller {
         courseText.clear();
         model.preparedCourseStmtToQuery();
         ArrayList courseInfo = model.findCourseInfo(cId);
-        if(courseInfo.get(2)!= "0") {
-            courseText.appendText("Course Name: " + courseInfo.get(0) + "\n"
-                    + "Student: " + courseInfo.get(1) + ", Grade: " + courseInfo.get(2));
+        if(!courseInfo.get(0).equals(0.0)) {
+            courseText.appendText("The average Grade for " + cId + " is " + courseInfo.get(0));
         }else{
-            courseText.appendText(courseInfo.get(1)+" has not yet finished "+courseInfo.get(0));
+            courseText.appendText("The course "+cId+" has not been graded yet.");
         }
     }
 
