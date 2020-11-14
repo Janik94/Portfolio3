@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
-import javafx.scene.shape.Line;
+//import javafx.scene.shape.Line;
 
 
 public class StudentView {
@@ -21,7 +21,7 @@ public class StudentView {
     ComboBox<Student> studentBox;
     ComboBox<Courses> courseBox;
 
-    Button exitButton = new Button("Exit");
+    //Button exitButton = new Button("Exit");
 
     public StudentView(StudentModel model, Controller control) {
         this.model = model;

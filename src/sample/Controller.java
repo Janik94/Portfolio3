@@ -3,7 +3,6 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
-import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,9 +34,14 @@ public class Controller {
     public void handleStudInfoPrint(Integer id,TextArea studText) {
         studText.clear();
         model.preparedStudStmtToQuery();
-        ArrayList studInfo = model.findStudInfo(id);
-        studText.appendText(studInfo.get(1)+"\n" + "Course ID: "+studInfo.get(2)+", "+studInfo.get(3) + "\n"
-                                +"Course ID: "+studInfo.get(6) + ", "+studInfo.get(7));
+        ArrayList<ArrayList> studInfo = model.findStudInfo(id);
+        for(int i = 0; i < studInfo.size(); i++){
+            if(studInfo.get(i).get(3).equals(0)) {
+                studText.appendText(studInfo.get(i).get(1) + "\n" + "Course ID: " + studInfo.get(i).get(2) + ", no grade yet. \n");
+            }else {
+                studText.appendText(studInfo.get(i).get(1) + "\n" + "Course ID: " + studInfo.get(i).get(2) + ", " + studInfo.get(i).get(3) + "\n");
+            }
+        }
     }
 
     public void handleCourseInfoPrint(String cId, TextArea courseText){

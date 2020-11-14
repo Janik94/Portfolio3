@@ -1,7 +1,7 @@
 package sample;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 
 
 import static java.sql.DriverManager.getConnection;
@@ -74,7 +74,7 @@ public class StudentModel {
     }
 
     public ArrayList findStudInfo(Integer studId) {
-        ArrayList info = new ArrayList<>();
+        ArrayList<ArrayList> info = new ArrayList<>();
         try{
             pStmt.setInt(1, studId);
             ResultSet rs = pStmt.executeQuery();
@@ -83,11 +83,12 @@ public class StudentModel {
                 String sName = rs.getString(2);
                 String cId = rs.getString(3);
                 Integer sGrade = rs.getInt(4);
-                System.out.println(sId);
-                info.add(sId);
-                info.add(sName);
-                info.add(cId);
-                info.add(sGrade);
+                ArrayList newInfo =  new ArrayList();
+                newInfo.add(sId);
+                newInfo.add(sName);
+                newInfo.add(cId);
+                newInfo.add(sGrade);
+                info.add(newInfo);
             }
         }catch(SQLException e){
             e.printStackTrace();
