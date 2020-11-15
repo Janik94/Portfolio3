@@ -34,12 +34,34 @@ public class Controller {
     public void handleStudInfoPrint(Integer id,TextArea studText) {
         studText.clear();
         model.preparedStudStmtToQuery();
-        ArrayList<ArrayList> studInfo = model.findStudInfo(id);
+        ArrayList<Student> studInfo = model.findStudInfo(id);
+        for(Student stud : studInfo){
+            if(stud.getId().equals(id)) {
+                studText.appendText(stud.getName());
+                ArrayList<Integer> grades = stud.getGrades();
+                for (int j = 0; j < grades.size(); j++) {
+                    if(grades.get(j) == 0){
+                        studText.appendText("\n Course: " + stud.getCourses().get(j) + ", no grade yet.");
+                } else{
+                    studText.appendText("\n Course: " + stud.getCourses().get(j) +"   Grade: " + stud.getGrades().get(j));
+                }
+            }
+            }
+        }
+        /*ArrayList<ArrayList> studInfo = model.findStudInfo(id);
         for(int i = 0; i < studInfo.size(); i++){
+            //studText.appendText(studInfo.get(i).get(1) + "\n");
             if(studInfo.get(i).get(3).equals(0)) {
-                studText.appendText(studInfo.get(i).get(1) + "\n" + "Course ID: " + studInfo.get(i).get(2) + ", no grade yet. \n");
+                studText.appendText("Course ID: " + studInfo.get(i).get(2) + ", no grade yet.\n");
             }else {
-                studText.appendText(studInfo.get(i).get(1) + "\n" + "Course ID: " + studInfo.get(i).get(2) + ", " + studInfo.get(i).get(3) + "\n");
+                studText.appendText("Course ID: " + studInfo.get(i).get(2) + ", " + studInfo.get(i).get(3) + "\n");
+            }
+        }*/
+        model.preparedAvgQuery();
+        ArrayList<Student> avg = model.findAvgGrade(id);
+        for(Student stud : avg) {
+            if(id.equals(stud.getId())) {
+                studText.appendText("\n Student's average grade is : " + stud.getAvgGrade());
             }
         }
     }
@@ -47,7 +69,7 @@ public class Controller {
     public void handleCourseInfoPrint(String cId, TextArea courseText){
         courseText.clear();
         model.preparedCourseStmtToQuery();
-        ArrayList courseInfo = model.findCourseInfo(cId);
+        ArrayList<Double> courseInfo = model.findCourseInfo(cId);
         if(!courseInfo.get(0).equals(0.0)) {
             courseText.appendText("The average Grade for " + cId + " is " + courseInfo.get(0));
         }else{

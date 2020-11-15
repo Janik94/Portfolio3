@@ -31,7 +31,7 @@ public class StudentView {
 
     private void createAndConfigure() {
         startView = new TabPane();
-        //Tab to find informartion
+        //Tab to find information
         startView.getTabs().add(findInfoTab());
         //tab list of students
         startView.getTabs().add(studentTab());
@@ -100,7 +100,7 @@ public class StudentView {
         TableView<Courses> courses = new TableView<>();
         courses.setItems(FXCollections.observableArrayList(model.courseQuery()));
         Tab courseTab = new Tab();
-        courseTab.setText("Courselist");
+        courseTab.setText("Course list");
         //courseID?
         TableColumn<Courses, String> courseID = new TableColumn<>("CourseID");
         courseID.setCellValueFactory(new PropertyValueFactory<>("CourseID"));
@@ -117,7 +117,11 @@ public class StudentView {
         TableColumn<Courses, String> semester = new TableColumn<>("Semester");
         semester.setCellValueFactory(new PropertyValueFactory<>("Semester"));
 
-        courses.getColumns().addAll(courseID, courseName, teacher, year, semester);
+        courses.getColumns().add(courseID);
+        courses.getColumns().add(courseName);
+        courses.getColumns().add(teacher);
+        courses.getColumns().add(year);
+        courses.getColumns().add(semester);
         courseTab.setContent(courses);
         return courseTab;
     }
@@ -127,20 +131,22 @@ public class StudentView {
         TableView<Student> students = new TableView<>();
         students.setItems(FXCollections.observableArrayList(model.studentQuery()));
         Tab studentTab = new Tab();
-        studentTab.setText("Studentlist");
+        studentTab.setText("Student list");
         //name column
         TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         //id column
         TableColumn<Student, String> idColumn = new TableColumn<>("Student ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        //citycolumn
+        //city column
         TableColumn<Student, String> cityColumn = new TableColumn<>("Cities");
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("City"));
-        //for further addings
+        //for further adding
         //nameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("courses"));
         //TableColumn gradeColumn = new TableColumn<>("Grade");
-        students.getColumns().addAll(nameColumn, idColumn, cityColumn);
+        students.getColumns().add(nameColumn);
+        students.getColumns().add(idColumn);
+        students.getColumns().add(cityColumn);
         studentTab.setContent(students);
         return studentTab;
     }
