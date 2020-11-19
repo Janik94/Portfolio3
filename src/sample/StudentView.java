@@ -8,8 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 
-import java.util.List;
-
 
 public class StudentView {
     StudentModel model;
@@ -25,7 +23,7 @@ public class StudentView {
     ComboBox<Courses> courseBox;
     ComboBox<String> addGradeBox;
     ComboBox<Student> studentGrade;
-    ComboBox<String> courseGrade;
+    ComboBox<Courses> courseGrade;
 
     //Button exitButton = new Button("Exit");
 
@@ -183,15 +181,13 @@ public class StudentView {
     public Tab gradeTab(){
         addGradeButton = new Button("Add new Grade: ");
         addGradeBox = new ComboBox<>();
-        String[] grades = {"-3","00","02","4","7","10","12","null"};
+        String[] grades = {"-3","00","02","4","7","10","12"};
         addGradeBox.setItems(FXCollections.observableArrayList(grades));
         studentGrade = new ComboBox<>();
         courseGrade = new ComboBox<>();
         studentGrade.setItems(FXCollections.observableArrayList(model.studentNames));
         studentGrade.getSelectionModel().selectFirst();
-        int whatever = model.studentNames.indexOf(studentGrade.getValue());
-        System.out.println(model.studentNames.get(whatever).getCourses());
-        courseGrade.setItems(FXCollections.observableArrayList(model.studentNames.get(whatever).getCourses()));
+        courseGrade.setItems(FXCollections.observableArrayList(model.courses));
         courseGrade.getSelectionModel().selectFirst();
 
         GridPane grid = new GridPane();
@@ -205,7 +201,8 @@ public class StudentView {
         grid.add(grade,2,1);
         grid.add(addGradeBox,2,2);
         grid.add(addGradeButton, 0,4);
-        grid.add(addGradeText,30,13,15,10);
+            //int columnIndex,int rowIndex, int columnspan, int rowspan
+        grid.add(addGradeText,1,15,15,10);
 
 
 

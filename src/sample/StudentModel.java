@@ -1,6 +1,6 @@
 package sample;
 
-import javafx.event.ActionEvent;
+import javafx.scene.control.TextArea;
 
 import java.sql.*;
 import java.util.*;
@@ -103,7 +103,7 @@ public class StudentModel {
 
         //method to extract specific information for students
         //prepared Statement from preparedStudStmtToQuery() will be used here
-    public void findStudInfo(Integer studId) {
+    public void findStudInfo(Integer studId, TextArea area) {
         try{
                 //here we input the student id in the first(and only) placeholder
                 //and after that we just work with a resultSet again
@@ -111,18 +111,10 @@ public class StudentModel {
             ResultSet rs = pStmt.executeQuery();
             while(rs!= null && rs.next()) {
                 for (Student stud : studentNames) {
-                    //this time we don't create new students
-                    //we compare the input id with all students in the public arrayList of students
-                    //and then add courses and grades to arrayLists inside each student element
-                    if (rs.getInt(1) == (stud.getId())) {
-                            //if statement below is needed so that courses are not getting added again
-                            //if someone pushed the "find information" button several times
-                        if(!stud.getCourses().contains(rs.getString(3))) {
-                            stud.addCourses(rs.getString(3));
-                                //decided to extract grades as string
-                                //so that i can keep the "empty" grades as null
-                            stud.addGrades(rs.getString(4));
-                        }
+
+                    if (rs.getInt(1) == stud.getId()) {
+                        area.appendText(stud+"\n");
+                        area.appendText(rs.getString(3)+", "+rs.getString(4)+"\n");
                     }
                 }
             }
@@ -144,7 +136,7 @@ public class StudentModel {
         }
     }
         //method to extract average grade from our prepared statement
-    public ArrayList<Student> findAvgGrade(int id){
+    public void findAvgGrade(int id, TextArea area){
         try{
                 //setting placeholder to the student id we want to work with
             pStmt.setInt(1, id);
@@ -154,15 +146,14 @@ public class StudentModel {
                 for (Student stud : studentNames) {
                         //this checks each student in "studentNames" and if the id is equal to the id from the result set
                         //the we set the average grade in the student object to what we get from the database
-                    if (stud.getId().equals(rs.getInt(1))) {
-                        stud.setAvgGrade(rs.getDouble(2));
+                    if(stud.getId()==id){
+                        area.appendText("Average Grade: "+rs.getDouble(2));
                     }
                 }
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return studentNames;
     }
 
         //only additional information for the courses is the average grade
@@ -180,21 +171,26 @@ public class StudentModel {
     }
         //method to get the average grade for the course
         //then we also just add this information to the student object we request information about
-    public ArrayList<Courses> findCourseInfo(String cId) {
+    public void findCourseInfo(String cId, TextArea area) {
         try{
             pStmt.setString(1, cId);
             ResultSet rs = pStmt.executeQuery();
             while(rs!= null && rs.next()) {
                 for(Courses course : courses){
                     if(course.getCourseID().equals(cId)){
-                        course.setAvgGrade(rs.getDouble(1));
+                        area.appendText("Course: "+course.getCourseID()+ ", "+course.getName()+ ", "+course.getSemester() +" "+course.getYear()+
+                                "\n Teacher: "+course.getTeacher());
+                        if (rs.getDouble(1) != 0.0) {
+                            area.appendText("\n Average Grade: " + rs.getDouble(1));
+                        } else {
+                            area.appendText("\n The course is not finished yet.");
+                        }
                     }
                 }
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return courses;
     }
 
     public void preparedAddStmtToQuery(){
@@ -209,14 +205,20 @@ public class StudentModel {
         }
     }
 
-    public void handleAddGrade(String grade, Integer id, String course){
+    public Integer changeGrade(String grade, Student stud, Courses course){
+        Integer value = null;
         try {
             pStmt.setString(1, grade);
-            pStmt.setInt(2, id);
-            pStmt.setString(3, course);
+            pStmt.setString(2, course.getCourseID());
+            pStmt.setInt(3, stud.getId());
+            value = pStmt.executeUpdate();
+            System.out.println(studentNames);
+            System.out.println(stud);
+            System.out.println(studentNames.indexOf(stud));
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return value;
     }
 }
 

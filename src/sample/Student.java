@@ -12,9 +12,9 @@ public class Student {
         //I chose to use array lists for courses and grades
         //since they are extracted in the same method
         //the grades will have the same index as the course
-    private final ArrayList<String> courses = new ArrayList<>();
 
-    private final ArrayList<String> grades = new ArrayList<>();
+    /*private final ArrayList<String> courses = new ArrayList<>();
+    private final ArrayList<String> grades = new ArrayList<>();*/
 
     public Student(Integer id, String name, String city) {
         this.name = name;
@@ -37,7 +37,7 @@ public class Student {
         this.avgGrade=avg;
     }
 
-    public void addCourses(String course){
+    /*public void addCourses(String course){
         this.courses.add(course);
     }
 
@@ -51,7 +51,8 @@ public class Student {
 
     public ArrayList<String> getGrades(){
         return this.grades;
-    }
+    }*/
+
 
         //I override the toString() method
         //this gives me the possibility to decide what is write in my student ComboBox
