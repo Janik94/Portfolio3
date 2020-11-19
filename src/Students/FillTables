@@ -10,9 +10,9 @@ INSERT INTO Students(SID, Name, City) VALUES(001, 'Aisha Lincoln', 'Nykøbing F'
                                             (010, 'Janet Jensen', 'Jyllinge');
 
 INSERT INTO Courses(CID, Name, Teacher, Year, Semester)
-                    Values('CO01', 'ES1', 'Ebbe', 2019, 'Autumn'),
-                          ('CO02', 'SD', 'Line', 2019, 'Autumn'),
-                          ('CO03', 'SD', 'Line', 2020, 'Spring');
+                    Values('CO01', 'Essential Computing 1', 'Ebbe', 2019, 'Autumn'),
+                          ('CO02', 'Software Development 19', 'Line', 2019, 'Autumn'),
+                          ('CO03', 'Software Development 20', 'Line', 2020, 'Spring');
 
 INSERT INTO Grades(CourseID, StudentID, Grade)
             VALUES('CO02', 001, 12),('CO01',001,10),--aisha
