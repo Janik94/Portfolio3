@@ -2,7 +2,8 @@ package sample;
 
 import java.util.ArrayList;
 
-    //simple class so that I can create students with the information extracted from the database
+    //simple class so that I can create students
+    // with the information extracted from the database
 public class Student {
     private final String name;
     private final String city;
@@ -12,7 +13,8 @@ public class Student {
         //since they are extracted in the same method
         //the grades will have the same index as the course
     private final ArrayList<String> courses = new ArrayList<>();
-    private final ArrayList<Integer> grades = new ArrayList<>();
+
+    private final ArrayList<String> grades = new ArrayList<>();
 
     public Student(Integer id, String name, String city) {
         this.name = name;
@@ -38,14 +40,16 @@ public class Student {
     public void addCourses(String course){
         this.courses.add(course);
     }
+
     public ArrayList<String> getCourses(){
         return this.courses;
     }
 
-    public void addGrades(Integer grade) {
+    public void addGrades(String grade) {
         this.grades.add(grade);
     }
-    public ArrayList<Integer> getGrades(){
+
+    public ArrayList<String> getGrades(){
         return this.grades;
     }
 

@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 
+import java.util.List;
+
 
 public class StudentView {
     StudentModel model;
@@ -15,10 +17,15 @@ public class StudentView {
     private TabPane startView;
     Button studentButton;
     Button courseButton;
+    Button addGradeButton;
     TextArea studentText;
     TextArea courseText;
+    TextArea addGradeText;
     ComboBox<Student> studentBox;
     ComboBox<Courses> courseBox;
+    ComboBox<String> addGradeBox;
+    ComboBox<Student> studentGrade;
+    ComboBox<String> courseGrade;
 
     //Button exitButton = new Button("Exit");
 
@@ -34,10 +41,13 @@ public class StudentView {
         startView = new TabPane();
         //Tab to find information
         startView.getTabs().add(findInfoTab());
+        //tab to add grades
+        startView.getTabs().add(gradeTab());
         //tab list of students
         startView.getTabs().add(studentTab());
         //tab list of courses
         startView.getTabs().add(courseTab());
+
 
 
     }
@@ -50,10 +60,10 @@ public class StudentView {
         Label courseLabel = new Label("Choose Course:");
         studentButton = new Button("Find Student Information");
         courseButton = new Button("Find Course Information");
-        studentText = new TextArea();
-        studentText.setText("Student information will be printed here.");
-        courseText = new TextArea();
-        courseText.setText("Course information will be printed here.");
+
+        studentText = new TextArea("Student information will be printed here.");
+        courseText = new TextArea("Course information will be printed here.");
+        addGradeText = new TextArea("Information will be printed...");
 
             //initialization of a new comboBox and adding all my student objects in it
             //this way I can have a toString method in my student class
@@ -67,6 +77,7 @@ public class StudentView {
         courseBox.setItems(FXCollections.observableArrayList(model.courseQuery()));
         courseBox.getSelectionModel().selectFirst();
 
+
             //then i chose to add a gridPane to this Tab, so that i easily can add all labels, combo boxes and textAreas
         GridPane gridOne = new GridPane();
         gridOne.setMinSize(300, 200);
@@ -75,22 +86,24 @@ public class StudentView {
             //(top,right,bottom, left)
         gridOne.setPadding(new Insets(10, 40, 15, 40));
         gridOne.setHgap(1);
-        gridOne.setVgap(5);
+        gridOne.setVgap(1);
 
 
         //add label and combobox for students
         //i is the column, i1 is the row
         gridOne.add(studentLabel, 0, 1);
-        gridOne.add(studentBox, 0, 2);
-        gridOne.add(studentButton,0,3);
-        gridOne.add(studentText,30,0,15,10);
+        gridOne.add(studentBox, 1, 1);
+        gridOne.add(studentButton,2,1);
+        gridOne.add(studentText,0,3,20,5);
+
 
 
         //add label and combobox for courses
-        gridOne.add(courseLabel, 0, 30);
-        gridOne.add(courseBox, 0, 31);
-        gridOne.add(courseButton,0,32);
-        gridOne.add(courseText,30,29,15,10);
+        gridOne.add(courseLabel, 0, 28);
+        gridOne.add(courseBox, 1, 28);
+        gridOne.add(courseButton,2,28);
+        gridOne.add(courseText,0,30,20,5);
+
 
 
         Tab infoTab = new Tab();
@@ -165,6 +178,40 @@ public class StudentView {
         courses.getColumns().add(semester);
         courseTab.setContent(courses);
         return courseTab;
+    }
+
+    public Tab gradeTab(){
+        addGradeButton = new Button("Add new Grade: ");
+        addGradeBox = new ComboBox<>();
+        String[] grades = {"-3","00","02","4","7","10","12","null"};
+        addGradeBox.setItems(FXCollections.observableArrayList(grades));
+        studentGrade = new ComboBox<>();
+        courseGrade = new ComboBox<>();
+        studentGrade.setItems(FXCollections.observableArrayList(model.studentNames));
+        studentGrade.getSelectionModel().selectFirst();
+        int whatever = model.studentNames.indexOf(studentGrade.getValue());
+        System.out.println(model.studentNames.get(whatever).getCourses());
+        courseGrade.setItems(FXCollections.observableArrayList(model.studentNames.get(whatever).getCourses()));
+        courseGrade.getSelectionModel().selectFirst();
+
+        GridPane grid = new GridPane();
+        Label stud = new Label("Choose a student: ");
+        Label course = new Label("Choose a course: ");
+        Label grade = new Label("Choose a grade: ");
+        grid.add(stud,0,1);
+        grid.add(studentGrade,0,2);
+        grid.add(course,1,1);
+        grid.add(courseGrade,1,2);
+        grid.add(grade,2,1);
+        grid.add(addGradeBox,2,2);
+        grid.add(addGradeButton, 0,4);
+        grid.add(addGradeText,30,13,15,10);
+
+
+
+        Tab gradeTab = new Tab("Add new Grade");
+        gradeTab.setContent(grid);
+        return gradeTab;
     }
 
         //constructs a parent based on our "startView"

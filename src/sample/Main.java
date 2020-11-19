@@ -17,15 +17,11 @@ public class Main extends Application {
         StudentView view = new StudentView(SDB, control);
         control.setView(view);
         primaryStage.setTitle("Student Database");
-        primaryStage.setScene(new Scene(view.asParent(), 500, 400));
+        primaryStage.setScene(new Scene(view.asParent(), 700, 400));
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
         launch(args);
-
-            
-
     }
 }

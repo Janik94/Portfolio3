@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.event.ActionEvent;
+
 import java.sql.*;
 import java.util.*;
 
@@ -107,14 +109,20 @@ public class StudentModel {
                 //and after that we just work with a resultSet again
             pStmt.setInt(1, studId);
             ResultSet rs = pStmt.executeQuery();
-            while(rs!= null && rs.next()){
-                for(Student stud : studentNames){
-                        //this time we don't create new students
-                        //we compare the input id with all students in the public arrayList of students
-                        //and then add courses and grades to arrayLists inside each student element
-                    if(rs.getInt(1) == (stud.getId())){
-                        stud.addCourses(rs.getString(3));
-                        stud.addGrades(rs.getInt(4));
+            while(rs!= null && rs.next()) {
+                for (Student stud : studentNames) {
+                    //this time we don't create new students
+                    //we compare the input id with all students in the public arrayList of students
+                    //and then add courses and grades to arrayLists inside each student element
+                    if (rs.getInt(1) == (stud.getId())) {
+                            //if statement below is needed so that courses are not getting added again
+                            //if someone pushed the "find information" button several times
+                        if(!stud.getCourses().contains(rs.getString(3))) {
+                            stud.addCourses(rs.getString(3));
+                                //decided to extract grades as string
+                                //so that i can keep the "empty" grades as null
+                            stud.addGrades(rs.getString(4));
+                        }
                     }
                 }
             }
@@ -187,6 +195,28 @@ public class StudentModel {
             e.printStackTrace();
         }
         return courses;
+    }
+
+    public void preparedAddStmtToQuery(){
+        String sql = "UPDATE Grades SET Grade = ? WHERE CourseID = ? AND StudentID = ? AND Grade IS NULL;";
+        try
+        {
+            pStmt = conn.prepareStatement(sql);
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void handleAddGrade(String grade, Integer id, String course){
+        try {
+            pStmt.setString(1, grade);
+            pStmt.setInt(2, id);
+            pStmt.setString(3, course);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }
 

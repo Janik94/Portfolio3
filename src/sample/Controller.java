@@ -29,8 +29,17 @@ public class Controller {
         view.studentButton.setOnAction(printStudInfo);
         EventHandler<ActionEvent> printCourseInfo = e-> handleCourseInfoPrint(view.courseBox.getValue().getCourseID(), view.courseText);
         view.courseButton.setOnAction(printCourseInfo);
+        EventHandler<ActionEvent> addGrade = e-> handleAddGrade(view.addGradeBox.getValue(),view.studentBox.getValue().getId(),
+                                view.courseBox.getValue().getCourseID(), view.addGradeText);
+        view.addGradeButton.setOnAction(addGrade);
     }
 
+    public void handleAddGrade(String grade, Integer id, String course, TextArea area) {
+        area.clear();
+        area.appendText(grade+", "+id+", "+course);
+        model.preparedAddStmtToQuery();
+        model.handleAddGrade(grade,id,course);
+    }
         //method to fill textArea with information about students
     public void handleStudInfoPrint(Integer id,TextArea studText) {
             //clears textArea before something is printed
@@ -48,11 +57,11 @@ public class Controller {
             if(stud.getId().equals(id)) {
                 studText.appendText(stud.getName()+", Student ID: "+stud.getId());
                     //to make code more readable I chose to make a new array list for the grades of the students
-                ArrayList<Integer> grades = stud.getGrades();
+                ArrayList<String> grades = stud.getGrades();
                     //since the courses and grades array list in the student object always have the same size
                     //we can go through the grades list and use the same index for the courses
                 for (int j = 0; j < grades.size(); j++) {
-                    if(grades.get(j) == 0){
+                    if(grades.get(j) == null){
                         studText.appendText("\n Course: " + stud.getCourses().get(j) + ", no grade yet.");
                 } else{
                     studText.appendText("\n Course: " + stud.getCourses().get(j) +"   Grade: " + stud.getGrades().get(j));
