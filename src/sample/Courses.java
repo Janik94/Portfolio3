@@ -7,7 +7,6 @@ public class Courses {
     private final String teacher;
     private final Integer year;
     private final String semester;
-    private double avgGrade;
 
     public Courses(String courseID, String name, String teacher, Integer year, String semester) {
         this.courseID = courseID;
@@ -15,14 +14,6 @@ public class Courses {
         this.teacher = teacher;
         this.year = year;
         this.semester = semester;
-    }
-
-    public double getAvgGrade(){
-        return this.avgGrade;
-    }
-
-    public void setAvgGrade(double average){
-        this.avgGrade=average;
     }
 
     public String getCourseID() {

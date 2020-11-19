@@ -25,6 +25,10 @@ public class StudentModel {
         conn = getConnection(this.url);
     }
 
+    public void close() throws SQLException{
+        conn.close();
+    }
+
     public void createStatement() throws SQLException{
         this.stmt = conn.createStatement();
     }
@@ -109,14 +113,12 @@ public class StudentModel {
                 //and after that we just work with a resultSet again
             pStmt.setInt(1, studId);
             ResultSet rs = pStmt.executeQuery();
-            while(rs!= null && rs.next()) {
-                for (Student stud : studentNames) {
-
-                    if (rs.getInt(1) == stud.getId()) {
-                        area.appendText(stud+"\n");
-                        area.appendText(rs.getString(3)+", "+rs.getString(4)+"\n");
-                    }
-                }
+            while(rs != null && rs.next()) {
+                        if(rs.getString(4) == null) {
+                            area.appendText(rs.getString(3) + " has not been graded yet.\n");
+                        }else {
+                            area.appendText(rs.getString(3) + ", Grade: " + rs.getString(4) + "\n");
+                        }
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -204,20 +206,21 @@ public class StudentModel {
             System.out.println(e.getMessage());
         }
     }
-
+        //method to change add a grade, if a course has not been grade yet
+        //decided to return "value", so that method does not need another input
     public Integer changeGrade(String grade, Student stud, Courses course){
         Integer value = null;
         try {
             pStmt.setString(1, grade);
             pStmt.setString(2, course.getCourseID());
             pStmt.setInt(3, stud.getId());
+                //returns 0 if grade can not be changed because grade already exists
+                //returns 1 if grade can be changed because it was "null"
             value = pStmt.executeUpdate();
-            System.out.println(studentNames);
-            System.out.println(stud);
-            System.out.println(studentNames.indexOf(stud));
         }catch(SQLException e){
             e.printStackTrace();
         }
+            //returns either 0 or 1
         return value;
     }
 }

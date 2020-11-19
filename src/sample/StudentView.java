@@ -25,8 +25,6 @@ public class StudentView {
     ComboBox<Student> studentGrade;
     ComboBox<Courses> courseGrade;
 
-    //Button exitButton = new Button("Exit");
-
     public StudentView(StudentModel model, Controller control) {
         this.model = model;
         this.control = control;
@@ -45,9 +43,6 @@ public class StudentView {
         startView.getTabs().add(studentTab());
         //tab list of courses
         startView.getTabs().add(courseTab());
-
-
-
     }
 
         //method to create the first tab
@@ -95,14 +90,11 @@ public class StudentView {
         gridOne.add(studentText,0,3,20,5);
 
 
-
         //add label and combobox for courses
         gridOne.add(courseLabel, 0, 28);
         gridOne.add(courseBox, 1, 28);
         gridOne.add(courseButton,2,28);
         gridOne.add(courseText,0,30,20,5);
-
-
 
         Tab infoTab = new Tab();
 
@@ -201,7 +193,7 @@ public class StudentView {
         grid.add(grade,2,1);
         grid.add(addGradeBox,2,2);
         grid.add(addGradeButton, 0,4);
-            //int columnIndex,int rowIndex, int columnspan, int rowspan
+            //int columnIndex,int rowIndex, int column span, int rowspan
         grid.add(addGradeText,1,15,15,10);
 
 

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS Students(SID INTEGER NOT NULL PRIMARY KEY, Name TEXT,
+                                    City TEXT);
+CREATE TABLE IF NOT EXISTS Courses(CID TEXT NOT NULL PRIMARY KEY, Name TEXT,
+                                    Teacher TEXT, Year INTEGER, Semester TEXT);
+CREATE TABLE IF NOT EXISTS Grades(CourseID TEXT, StudentID INTEGER, Grade INTEGER,
+                                    PRIMARY KEY (CourseID,StudentID),
+                                    FOREIGN KEY (CourseID) REFERENCES Courses(CID) ON DELETE RESTRICT ON UPDATE CASCADE,
+                                    FOREIGN KEY (StudentID) REFERENCES Students(SID)ON DELETE RESTRICT ON UPDATE CASCADE);

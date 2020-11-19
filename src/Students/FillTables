@@ -1,0 +1,27 @@
+INSERT INTO Students(SID, Name, City) VALUES(001, 'Aisha Lincoln', 'Nykøbing F'),
+                                            (002, 'Anya Nielsen', 'Nykøbing F'),
+                                            (003, 'Alfred Jensen', 'Camas'),
+                                            (004, 'Berta Bertelsen', 'Billund'),
+                                            (005, 'Albert Antonsen', 'Sorø'),
+                                            (006, 'Eske Eriksen', 'Eskildstrup'),
+                                            (007, 'Olaf Olesen', 'Odense'),
+                                            (008, 'Salma Simonsen', 'Stockholm'),
+                                            (009, 'Theis Thomason', 'Tolløse'),
+                                            (010, 'Janet Jensen', 'Jyllinge');
+
+INSERT INTO Courses(CID, Name, Teacher, Year, Semester)
+                    Values('CO01', 'ES1', 'Ebbe', 2019, 'Autumn'),
+                          ('CO02', 'SD', 'Line', 2019, 'Autumn'),
+                          ('CO03', 'SD', 'Line', 2020, 'Spring');
+
+INSERT INTO Grades(CourseID, StudentID, Grade)
+            VALUES('CO02', 001, 12),('CO01',001,10),--aisha
+                  ('CO03',002,null),('CO01',002,12), --anya
+                  ('CO02',003,7),('CO01',003,10), --alfred
+                  ('CO03',004,null),('CO01',004,2),--berta
+                  ('CO02',005,10),('CO01',005,7), --albert
+                  ('CO03',006,null),('CO01',006,10),--eske
+                  ('CO02',007,4),('CO01',007,12),--olaf
+                  ('CO03',008,null),('CO01',008,12),--salma
+                  ('CO02',009,12),('CO01',009,12),--theis
+                  ('CO03',010,null),('CO01',010,7);--janet
