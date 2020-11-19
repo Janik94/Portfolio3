@@ -25,10 +25,6 @@ public class StudentModel {
         conn = getConnection(this.url);
     }
 
-    public void close() throws SQLException{
-        conn.close();
-    }
-
     public void createStatement() throws SQLException{
         this.stmt = conn.createStatement();
     }
@@ -208,11 +204,11 @@ public class StudentModel {
     }
         //method to change add a grade, if a course has not been grade yet
         //decided to return "value", so that method does not need another input
-    public Integer changeGrade(String grade, Student stud, Courses course){
+    public Integer changeGrade(String grade, Student stud, String course){
         Integer value = null;
         try {
             pStmt.setString(1, grade);
-            pStmt.setString(2, course.getCourseID());
+            pStmt.setString(2, course);
             pStmt.setInt(3, stud.getId());
                 //returns 0 if grade can not be changed because grade already exists
                 //returns 1 if grade can be changed because it was "null"
@@ -222,6 +218,25 @@ public class StudentModel {
         }
             //returns either 0 or 1
         return value;
+    }
+        //select courses that have a grade as "null" once
+    public ArrayList<String> nullCourses(){
+        String sql = "SELECT DISTINCT CourseID, Grade From Grades Where Grade is null;";
+        ResultSet rs;
+        ArrayList<String> nullCourses = new ArrayList<>();
+        try
+        {
+            rs = stmt.executeQuery(sql);
+            while(rs!= null && rs.next()){
+                nullCourses.add(rs.getString(1));
+            }
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        System.out.println(nullCourses);
+    return nullCourses;
     }
 }
 

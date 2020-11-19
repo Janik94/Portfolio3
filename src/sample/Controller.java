@@ -24,7 +24,7 @@ public class Controller {
 
     public void setView(StudentView view){
         this.view = view;
-            
+
         EventHandler<ActionEvent> printStudInfo = e -> handleStudInfoPrint(view.studentBox.getValue().getId(), view.studentText);
         view.studentButton.setOnAction(printStudInfo);
         EventHandler<ActionEvent> printCourseInfo = e-> handleCourseInfoPrint(view.courseBox.getValue().getCourseID(), view.courseText);
@@ -60,7 +60,7 @@ public class Controller {
 
     }
 
-    public void handleAddGrade(String grade, Student stud, Courses course, TextArea area) {
+    public void handleAddGrade(String grade, Student stud, String course, TextArea area) {
         area.clear();
             //preparing statement to add a grade
         model.preparedAddStmtToQuery();

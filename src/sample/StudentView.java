@@ -23,7 +23,7 @@ public class StudentView {
     ComboBox<Courses> courseBox;
     ComboBox<String> addGradeBox;
     ComboBox<Student> studentGrade;
-    ComboBox<Courses> courseGrade;
+    ComboBox<String> courseGrade;
 
     public StudentView(StudentModel model, Controller control) {
         this.model = model;
@@ -179,7 +179,7 @@ public class StudentView {
         courseGrade = new ComboBox<>();
         studentGrade.setItems(FXCollections.observableArrayList(model.studentNames));
         studentGrade.getSelectionModel().selectFirst();
-        courseGrade.setItems(FXCollections.observableArrayList(model.courses));
+        courseGrade.setItems(FXCollections.observableArrayList(model.nullCourses()));
         courseGrade.getSelectionModel().selectFirst();
 
         GridPane grid = new GridPane();
