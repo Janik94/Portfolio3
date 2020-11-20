@@ -110,6 +110,7 @@ public class StudentModel {
             pStmt.setInt(1, studId);
             ResultSet rs = pStmt.executeQuery();
             while(rs != null && rs.next()) {
+                            //input course and grade into textarea for the students
                         if(rs.getString(4) == null) {
                             area.appendText(rs.getString(3) + " has not been graded yet.\n");
                         }else {
@@ -142,8 +143,8 @@ public class StudentModel {
             ResultSet rs = pStmt.executeQuery();
             while(rs!= null && rs.next()) {
                 for (Student stud : studentNames) {
-                        //this checks each student in "studentNames" and if the id is equal to the id from the result set
-                        //the we set the average grade in the student object to what we get from the database
+                        //this checks each student in "studentNames" and if the id is equal to the id from the combobox
+                        //then we add the average grade to the textarea for the students
                     if(stud.getId()==id){
                         area.appendText("Average Grade: "+rs.getDouble(2));
                     }
@@ -175,10 +176,14 @@ public class StudentModel {
             ResultSet rs = pStmt.executeQuery();
             while(rs!= null && rs.next()) {
                 for(Courses course : courses){
+                        //if statement to check that we get the information about the course
+                        //the user requested
                     if(course.getCourseID().equals(cId)){
                         area.appendText("Course: "+course.getCourseID()+ ", "+course.getName()+ ", "+course.getSemester() +" "+course.getYear()+
                                 "\n Teacher: "+course.getTeacher());
-                        if (rs.getDouble(1) != 0.0) {
+                            //if the average grade of the course is null
+                            //there are no grades yet, so the course has not been graded
+                        if (rs.getString(1) !=null) {
                             area.appendText("\n Average Grade: " + rs.getDouble(1));
                         } else {
                             area.appendText("\n The course is not finished yet.");
@@ -219,7 +224,9 @@ public class StudentModel {
             //returns either 0 or 1
         return value;
     }
+
         //select courses that have a grade as "null" once
+        //these courses will be shown in the combobox for the courses in the add grade tab
     public ArrayList<String> nullCourses(){
         String sql = "SELECT DISTINCT CourseID, Grade From Grades Where Grade is null;";
         ResultSet rs;

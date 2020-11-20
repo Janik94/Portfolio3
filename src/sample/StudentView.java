@@ -196,8 +196,6 @@ public class StudentView {
             //int columnIndex,int rowIndex, int column span, int rowspan
         grid.add(addGradeText,1,15,15,10);
 
-
-
         Tab gradeTab = new Tab("Add new Grade");
         gradeTab.setContent(grid);
         return gradeTab;
